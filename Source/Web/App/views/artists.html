@@ -1,0 +1,33 @@
+﻿<section>
+    <span class="page-title" data-bind="text: title"></span>
+    <form class="form-inline pull-right" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search artists">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><a>Name</a></th>
+                <th>Number of Releases</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: artists">
+            <tr>
+                <td>
+                    <a data-bind="text: Name, attr: { href: '#/Artists/' + Id }"></a> 
+                </td>
+                <td data-bind="text: NumberOfDiscs"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div  style="text-align: center;" data-bind="visible: paginationParameters().pendingScrollRequest"><img alt="loading more..." src="../content/images/loading.gif"/></div>
+                    <div  style="text-align: center;" data-bind="visible: paginationParameters().pages().length > 0 && paginationParameters().hasNextPage() === false"><p>thats all!</p></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</section>

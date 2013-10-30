@@ -1,0 +1,42 @@
+﻿<section>
+    <span class="page-title" data-bind="text: title"></span>
+    <form class="form-inline pull-right" role="search" data-bind="submit: search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search discs" data-bind="value: searchTerm">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><a href="#" data-bind="click: function () { sort('Title') }">Title</a></th>
+                <th><a href="#" data-bind="click: function () { sort('Artist/Name') }">Artist</a></th>
+                <th><a href="#" data-bind="click: function () { sort('Released') }">Released</a></th>
+                <th>Tracks</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: discs">
+            <tr>
+                <td>
+                    <a data-bind="attr: { href: '#/Discs/' + Id() }">
+                        <img data-src="holder.js/70x70" data-bind="attr: { src: CoverImage }" class="img-thumbnail" alt="70x70" style="height: 70px; width: 70px;" src="../content/images/loading.gif" />
+                        <span data-bind="text: Title"></span>
+                    </a> 
+                </td>
+                <td>
+                    <a data-bind="text: ArtistName, attr: { href: '#/Artists/' + ArtistId() }"></a> 
+                </td>
+                <td data-bind="text: Released"></td>
+                <td data-bind="text: NumberOfTracks() + ' (' + Runtime() + ')'"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <div  style="text-align: center;" data-bind="visible: paginationParameters().pendingScrollRequest"><img alt="loading more..." src="../content/images/loading.gif"/></div>
+                    <div  style="text-align: center;" data-bind="visible: paginationParameters().pages().length > 0 && paginationParameters().hasNextPage() === false"><p>thats all!</p></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</section>

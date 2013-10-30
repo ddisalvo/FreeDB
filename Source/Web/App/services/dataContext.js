@@ -23,7 +23,7 @@
 
         function searchDiscs(term, paginationParameters) {
             return $.ajax({
-                url: '/api/discs?search=' + escape(term),
+                url: '/api/discs/search?search=' + escape(term),
                 dataType: 'json',
                 data: paginationToOdata(paginationParameters)
             });

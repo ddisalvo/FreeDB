@@ -14,7 +14,8 @@
 
             CreateMap<Artist, ArtistDto>()
                 .ForMember(d => d.Discs, c => c.Ignore())
-                .ForMember(d => d.HRef, c => c.Ignore());
+                .ForMember(d => d.HRef, c => c.Ignore())
+                .ForMember(d => d.NumberOfDiscs, c => c.Ignore());
         }
     }
 }

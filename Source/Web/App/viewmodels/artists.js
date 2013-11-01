@@ -6,6 +6,7 @@
             title: title,
             attached: attached,
             paginationParameters: ko.observable(getDefaultPaginationParameters()),
+            pendingRequest: ko.observable(true),
             artists: ko.observableArray([])
         };
 
@@ -16,6 +17,7 @@
                 .done(function (result) {
                     vm.paginationParameters().totalItemCount(result.Count);
                     vm.artists(result.Items);
+                    vm.pendingRequest(false);
                 });
             logger.log(title + ' View Activated', null, title, true);
             return true;

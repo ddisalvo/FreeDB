@@ -65,6 +65,8 @@ namespace FreeDB.DataFileImporter
                                            {
                                                DiscId = d.Id,
                                                DiscTitle = d.Title,
+                                               DiscLengthInSeconds = d.LengthInSeconds,
+                                               DiscReleaseDate = d.Released,
                                                ArtistId = d.Artist != null ? d.Artist.Id : new int?(),
                                                ArtistName = d.Artist != null ? d.Artist.Name : null,
                                                Genre = d.Genre != null ? d.Genre.Title : null,

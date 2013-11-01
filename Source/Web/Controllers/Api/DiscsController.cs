@@ -30,7 +30,7 @@
                 GetQueryHelper<Disc>()
                     .Create<GetDiscs>(options);
 
-            var withArtist = results.Results.Select(d => new { Disc = d, d.Artist });
+            var withArtist = results.Results.Select(d => new { Disc = d, d.Artist, d.Genre });
             var model = Map<IEnumerable<DiscSummaryDto>>(withArtist.Select(x => x.Disc)).ToArray();
             CalculateDiscHRefs(model);
 

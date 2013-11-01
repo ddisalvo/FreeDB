@@ -1,4 +1,4 @@
-﻿<section>
+﻿<section class="jumbotron">
     <span class="page-title" data-bind="text: title"></span>
     <form class="form-inline pull-right" role="search">
         <div class="form-group">
@@ -6,7 +6,7 @@
         </div>
         <button type="submit" class="btn btn-default">Search</button>
     </form>
-    <table class="table table-hover">
+    <table class="table table-hover" data-bind="visible: pendingRequest() === false">
         <thead>
             <tr>
                 <th><a>Name</a></th>
@@ -30,4 +30,5 @@
             </tr>
         </tfoot>
     </table>
+    <p data-bind="visible: pendingRequest"><img alt="loading more..." src="../content/images/loading.gif"/></p>
 </section>

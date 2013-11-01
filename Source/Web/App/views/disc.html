@@ -1,5 +1,5 @@
-﻿<section data-bind="with: disc">
-    <fieldset>
+﻿<section class="jumbotron" data-bind="with: disc">
+    <fieldset data-bind="visible: $parent.pendingRequest() === false">
         <legend class="legend-header" data-bind="text: Title"></legend>
         <h3><a data-bind="text: ArtistName, attr: { href: '#/Artists/' + ArtistId() }"></a> </h3>
         <div>
@@ -59,4 +59,5 @@
             </div>
         </div>
     </fieldset>
+    <p data-bind="visible: $parent.pendingRequest"><img alt="loading more..." src="../content/images/loading.gif"/></p>
 </section>

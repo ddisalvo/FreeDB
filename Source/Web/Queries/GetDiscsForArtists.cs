@@ -12,7 +12,8 @@
         {
             var discs = Context.Set<Disc>()
                                .Include(d => d.Tracks)
-                               .Where(criteria);
+                               .Where(criteria)
+                               .OrderBy(d => d.Released);
             var results = ApplyODataQuery(discs, SearchParameters);
             return
                 new FreeDbQueryResults<Disc>(results, discs.LongCount());

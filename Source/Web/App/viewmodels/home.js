@@ -6,6 +6,7 @@
             title: title,
             attached: attached,
             paginationParameters: ko.observable(getDefaultPaginationParameters()),
+            pendingRequest: ko.observable(true),
             discs: ko.observableArray([]),
             sort: sort,
             searchTerm: ko.observable(),
@@ -43,9 +44,10 @@
         }
 
         function getDefaultPaginationParameters(sortCommand) {
-            sortCommand = sortCommand || 'Title';
+            sortCommand = sortCommand || 'Released';
             var params = new paginationParameters();
             params.sortCommand(sortCommand);
+            params.sortDescending(sortCommand === 'Released' ? true : false);
 
             return params;
         }
@@ -80,7 +82,7 @@
                 return false;
 
             vm.paginationParameters(getDefaultPaginationParameters());
-            //vm.paginationParameters().pendingScrollRequest(true);
+            vm.pendingRequest(true);
             dataContext.searchDiscs(vm.searchTerm(), vm.paginationParameters)
                 .done(function(result) {
                     vm.paginationParameters().totalItemCount(result.Count);
@@ -89,7 +91,7 @@
                         vm.discs.push(new discWithImage(result.Items[i]));
                     }
 
-                    //vm.paginationParameters().pendingScrollRequest(false);
+                    vm.pendingRequest(false);
                 });
         }
 
@@ -102,6 +104,7 @@
                             return new discWithImage(options.data);
                         }
                     }, vm.discs);
+                    vm.pendingRequest(false);
                 });
         }
     });

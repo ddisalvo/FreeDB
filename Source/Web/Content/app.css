@@ -36,6 +36,7 @@ height: 60px;
     }
 }
 
+/* custom */
 span.page-title {
     font-size: 32px;
 }
@@ -51,4 +52,9 @@ legend.legend-header {
 
 .loader.active {
     visibility: visible;
+}
+
+section.jumbotron .table tbody > tr > td {
+    font-size: 14px;
+    vertical-align: middle;
 }

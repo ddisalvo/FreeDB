@@ -14,8 +14,8 @@
         {
             var disc = Get.New<Disc>();
             disc.Id = generateRandom ? new Randomizer().Next() : 100000000000;
-            disc.Artist = Get.New<Artist>(generateRandom);//AnyFromDb<Artist>();
-            disc.Genre = Get.New<Genre>(generateRandom);//AnyFromDb<Genre>();
+            disc.Artist = Get.New<Artist>(generateRandom);
+            disc.Genre = Get.New<Genre>(generateRandom);
 
             return disc;
         }

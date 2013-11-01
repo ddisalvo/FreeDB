@@ -28,5 +28,8 @@
 
         [DataMember]
         public string Released { get; set; }
+
+        [DataMember]
+        public string Genre { get; set; }
     }
 }

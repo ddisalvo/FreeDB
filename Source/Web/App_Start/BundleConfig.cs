@@ -28,6 +28,7 @@ namespace FreeDB.Web.App_Start
                 .Include("~/Content/ie10mobile.css")
                 .Include("~/Content/bootstrap/bootstrap.css")
                 .Include("~/Content/bootstrap/bootstrap-responsive.css")
+                .Include("~/Content/bootstrap/bootstrap-blue-sky.css")
                 //.Include("~/Content/durandal.css")
                 .Include("~/Content/font-awesome.css")
                 .Include("~/Content/font-awesome-ie7.min.css")

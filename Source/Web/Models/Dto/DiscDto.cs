@@ -11,9 +11,6 @@
         private const int FramesPerSecond = 75;
 
         [DataMember]
-        public string Genre { get; set; }
-
-        [DataMember]
         public TrackDto[] Tracks { get; set; }
 
         [DataMember]

@@ -2,7 +2,6 @@
 {
     using Bases;
     using Core.Model;
-    using FreeDB.Infrastructure.EntityFramework;
     using NUnit.Framework;
 
     [TestFixture]

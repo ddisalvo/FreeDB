@@ -55,7 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationProfiles\ArtistMapper.cs" />
-    <Compile Include="ConfigurationProfiles\Resolvers\RuntimeStringResolver.cs" />
     <Compile Include="ConfigurationProfiles\TrackMapper.cs" />
     <Compile Include="ConfigurationProfiles\DiscMapper.cs" />
     <Compile Include="AutoMapperConfiguration.cs" />

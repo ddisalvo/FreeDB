@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using Bases;
     using Core;
     using Core.Common;
@@ -51,16 +52,19 @@
             }
         }
 
-        private static Query ParseQuery(string searchQuery, QueryParser parser)
+        private static BooleanQuery ParseQuery(string searchTerm, QueryParser parser)
         {
-            Query query;
-            try
+            var query = new BooleanQuery();
+            searchTerm = searchTerm
+                .Replace("+", "")
+                .Replace("\"", "")
+                .Replace("\'", "");
+            //Split the search string into separate search terms by word
+            var terms = searchTerm.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var term in terms)
             {
-                query = parser.Parse(searchQuery.Trim());
-            }
-            catch (ParseException)
-            {
-                query = parser.Parse(QueryParser.Escape(searchQuery.Trim()));
+                query.Add(parser.Parse(term.Replace("*", "") + "*"),
+                          searchTerm.Contains("+") ? Occur.MUST : Occur.SHOULD);
             }
             return query;
         } 

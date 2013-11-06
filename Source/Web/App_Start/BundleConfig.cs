@@ -20,6 +20,7 @@ namespace FreeDB.Web.App_Start
                 .Include("~/scripts/Q.js")
                 .Include("~/scripts/breeze.debug.js")
                 .Include("~/scripts/bootstrap.js")
+                .Include("~/scripts/typeahead.js")
                 .Include("~/scripts/moment.js")
               );
 

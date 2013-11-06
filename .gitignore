@@ -683,3 +683,8 @@ $RECYCLE.BIN/
 /packages/toastr.2.0.1/content/scripts/toastr.min.js.map
 /packages/toastr.2.0.1/toastr.2.0.1.nupkg
 /packages/toastr.2.0.1/toastr.2.0.1.nuspec
+
+/packages/Twitter.Typeahead.0.9.3/Twitter.Typeahead.0.9.3.nupkg
+/packages/Twitter.Typeahead.0.9.3/Twitter.Typeahead.0.9.3.nuspec
+/packages/Twitter.Typeahead.0.9.3/content/Scripts/typeahead.js
+/packages/Twitter.Typeahead.0.9.3/content/Scripts/typeahead.min.js

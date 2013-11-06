@@ -49,7 +49,7 @@
                 {
                     LengthInSeconds = generateRandom ? Randomizer.Next() : 100,
                     Released =
-                        generateRandom ? DateTime.Now.Subtract(TimeSpan.FromDays(Randomizer.Next())) : DateTime.Now,
+                        generateRandom ? DateTime.Now.Subtract(TimeSpan.FromDays(Randomizer.Next(10000))) : DateTime.Now,
                     Title = generateRandom ? "TestTitle" + Randomizer.Next() : "TestTitle"
                 };
         }

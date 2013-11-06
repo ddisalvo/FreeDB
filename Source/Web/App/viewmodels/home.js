@@ -29,6 +29,11 @@
                     loadMoreDiscs();
                 }
             });
+            $('form input.search').typeahead(
+                {
+                    name: 'discSearch',
+                    remote: '/api/discs/suggest?search=%QUERY'
+                });
         }
 
         function sort(sortBy) {
@@ -40,7 +45,10 @@
                 vm.paginationParameters(getDefaultPaginationParameters(sortBy));
             }
 
-            getDiscs();
+            if (vm.searchTerm())
+                searchWithParameters(vm.paginationParameters);
+            else
+                getDiscs();
         }
 
         function getDefaultPaginationParameters(sortCommand) {
@@ -82,9 +90,13 @@
                 return false;
 
             vm.paginationParameters(getDefaultPaginationParameters());
+            searchWithParameters(vm.paginationParameters);
+        }
+
+        function searchWithParameters(parameters) {
             vm.pendingRequest(true);
-            dataContext.searchDiscs(vm.searchTerm(), vm.paginationParameters)
-                .done(function(result) {
+            dataContext.searchDiscs(vm.searchTerm(), parameters)
+                .done(function (result) {
                     vm.paginationParameters().totalItemCount(result.Count);
                     vm.discs([]);
                     for (var i = 0; i < result.Items.length; i++) {
@@ -96,6 +108,7 @@
         }
 
         function getDiscs() {
+            vm.pendingRequest(true);
             dataContext.getDiscs(vm.paginationParameters)
                 .done(function(result) {
                     vm.paginationParameters().totalItemCount(result.Count);

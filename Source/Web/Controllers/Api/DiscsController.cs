@@ -8,6 +8,7 @@
     using System.Web.Http.OData;
     using System.Web.Http.OData.Query;
     using Core.Model;
+    using Core.Model.Enumerations;
     using Core.Services;
     using Infrastructure.EntityFramework;
     using Models.Dto;
@@ -59,6 +60,13 @@
             CalculateDiscHRefs(model);
 
             return new PageResult<DiscSummaryDto>(model, null, results.TotalCount);
+        }
+
+        [HttpGet]
+        public IEnumerable<string> Suggest(string search)
+        {
+            var results = _searchService.Suggest(search, SearchField.DiscTitle);
+            return results;
         }
     }
 }

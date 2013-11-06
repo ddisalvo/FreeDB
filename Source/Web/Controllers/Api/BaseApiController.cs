@@ -60,8 +60,8 @@
             var descending = false;
             if (options.OrderBy != null)
             {
-                orderBy = options.OrderBy.RawValue.Split('/');
-                if (!options.OrderBy.RawValue.Substring(options.OrderBy.RawValue.IndexOf(' ')).Contains("desc"))
+                orderBy = options.OrderBy.RawValue.Split(',');
+                if (options.OrderBy.RawValue.Substring(options.OrderBy.RawValue.IndexOf(' ')).Contains("desc"))
                     descending = true;
             }
 

@@ -4,7 +4,6 @@
     using Core.Model;
     using FreeDB.Infrastructure;
     using NUnit.Framework;
-    using UnitTests.Helpers;
 
     [TestFixture]
     public class IndexServiceTests : BaseTestFixture

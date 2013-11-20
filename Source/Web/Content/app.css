@@ -59,6 +59,10 @@ section.jumbotron .table tbody > tr > td {
     vertical-align: middle;
 }
 
+section.jumbotron form.form-horizontal .form-group label {
+    padding-top: 0;
+}
+
 /* twitter typeahead w/ bootstrap */
 
 .twitter-typeahead{

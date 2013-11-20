@@ -8,13 +8,14 @@
     using Core.Common;
     using Core.Model.Enumerations;
     using Core.Services;
-    using Lucene.Net.Analysis.Standard;
-    using Lucene.Net.Documents;
-    using Lucene.Net.Index;
-    using Lucene.Net.QueryParsers;
-    using Lucene.Net.Search;
+    using Lucene;
     using Properties;
-    using Version = Lucene.Net.Util.Version;
+    using global::Lucene.Net.Analysis.Standard;
+    using global::Lucene.Net.Documents;
+    using global::Lucene.Net.Index;
+    using global::Lucene.Net.QueryParsers;
+    using global::Lucene.Net.Search;
+    using Version = global::Lucene.Net.Util.Version;
 
     public class SearchService : BaseLuceneService, ISearchService
     {
@@ -27,12 +28,13 @@
 
             using (var searcher = new IndexSearcher(Directory, true))
             {
+                searchParameters.PageSize = searchParameters.PageSize > MaxPageSize ? MaxPageSize : searchParameters.PageSize;
+
                 var hits = GetQueryHits(searcher, searchParameters);
                 var hitDocs = new List<Document>();
 
-                var pageSize = searchParameters.PageSize > MaxPageSize ? MaxPageSize : searchParameters.PageSize;
-                var start = (searchParameters.CurrentPage - 1) * pageSize;
-                for (var i = start; i < start + pageSize && i < hits.TotalHits; i++)
+                var start = (searchParameters.CurrentPage - 1) * searchParameters.PageSize;
+                for (var i = start; i < start + searchParameters.PageSize && i < hits.TotalHits; i++)
                 {
                     hitDocs.Add(searcher.Doc(hits.ScoreDocs[i].Doc));
                 }
@@ -63,16 +65,36 @@
 
         private static TopDocs GetQueryHits(Searcher searcher, SearchParameters searchParameters)
         {
+            if (!String.IsNullOrWhiteSpace(searchParameters.GroupBy) && searchParameters.SortBy != null && searchParameters.SortBy.Any())
+                throw new NotSupportedException("Cannot sort AND group by search query.");
+
             using (var analyzer = new StandardAnalyzer(Version.LUCENE_30))
             {
                 var parser = new MultiFieldQueryParser(Version.LUCENE_30, Enum.GetNames(typeof (SearchField)), analyzer);
                 var query = ParseQuery(searchParameters.SearchTerm, parser);
                 var sort = ParseSorting(searchParameters);
-
                 var filter = new QueryWrapperFilter(query);
-                return sort != null
-                           ? searcher.Search(query, filter, int.MaxValue, sort)
-                           : searcher.Search(query, filter, int.MaxValue);
+
+                if (sort != null && sort.GetSort().Any())
+                    return searcher.Search(query, filter, searchParameters.PageSize, sort);
+
+                if (!String.IsNullOrWhiteSpace(searchParameters.GroupBy))
+                {
+                    var groupedValues = new Dictionary<string, int>();
+                    searcher.Search(query, filter, new DelegatingCollector((reader, doc) =>
+                        {
+                            var groupByValue = searcher.Doc(doc).Get(searchParameters.GroupBy);
+                            if (String.IsNullOrWhiteSpace(groupByValue))
+                                return;
+
+                            if (!groupedValues.ContainsKey(groupByValue))
+                                groupedValues.Add(groupByValue, doc);
+                        }));
+                    return new TopDocs(groupedValues.Count,
+                                       groupedValues.Select(g => new ScoreDoc(g.Value, 0)).ToArray(), 0);
+                }
+
+                return searcher.Search(query, filter, searchParameters.PageSize);
             }
         }
 

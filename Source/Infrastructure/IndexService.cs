@@ -6,10 +6,10 @@
     using System.Reflection;
     using Bases;
     using Core.Services;
-    using Lucene.Net.Analysis.Standard;
-    using Lucene.Net.Documents;
-    using Lucene.Net.Index;
-    using Version = Lucene.Net.Util.Version;
+    using global::Lucene.Net.Analysis.Standard;
+    using global::Lucene.Net.Documents;
+    using global::Lucene.Net.Index;
+    using Version = global::Lucene.Net.Util.Version;
 
     public class IndexService : BaseLuceneService, IIndexService
     {

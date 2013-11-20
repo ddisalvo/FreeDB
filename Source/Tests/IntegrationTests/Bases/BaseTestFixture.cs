@@ -7,6 +7,7 @@
     using FreeDB.Infrastructure.AutoMapper;
     using NUnit.Framework;
 
+    [TestFixture]
     public abstract class BaseTestFixture : UnitTests.Bases.BaseTestFixture
     {
         [SetUp]

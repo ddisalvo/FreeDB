@@ -5,19 +5,13 @@
     using Core.Model;
     using FreeDB.Infrastructure.EntityFramework;
     using NUnit.Framework;
-    using UnitTests.Helpers;
 
     [TestFixture]
     public class DiscPersistenceTests : PersistenceTester<Disc>
     {
         protected override Disc GetNew(bool generateRandom = false)
         {
-            var disc = Get.New<Disc>();
-            disc.Id = generateRandom ? new Randomizer().Next() : 100000000000;
-            disc.Artist = Get.New<Artist>(generateRandom);
-            disc.Genre = Get.New<Genre>(generateRandom);
-
-            return disc;
+            return Get.NewDiscWithArtistAndGenre(generateRandom);
         }
 
         [Test]

@@ -1,49 +1,22 @@
 ﻿namespace FreeDB.Web.Controllers.Api
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
     using System.Web.Http.OData.Query;
-    using Core.Bases;
     using Core.Common;
-    using Core.Model;
-    using Infrastructure.EntityFramework;
     using Models.Dto;
-    using Queries;
-
+    
     public class BaseApiController : ApiController
     {
-        private readonly FreeDbDataContext _dataContext;
-
-        protected BaseApiController(FreeDbDataContext dataContext)
-        {
-            _dataContext = dataContext;
-        }
-
         protected TDest Map<TDest>(object source)
             where TDest : class
         {
             return Core.DependencyResolver.Map<TDest>(source);
         }
 
-        protected IQueryable<Disc> Discs
+        protected SearchParameters ConvertODataToSearchParameters(string search, ODataQueryOptions options, int maxPageSize)
         {
-            get { return _dataContext.Set<Disc>(); }
-        }
-
-        protected IQueryable<Artist> Artists
-        {
-            get { return _dataContext.Set<Artist>(); }
-        }
-
-        public Query<T> GetQueryHelper<T>() where T : PersistentObject
-        {
-            return new Query<T>(_dataContext);
-        }
-
-        protected SearchParameters ConvertODataToSearchParameters(string search, ODataQueryOptions options)
-        {
-            var top = BaseODataQuery<object>.MaxPageSize;
+            var top = maxPageSize;
             if (options == null)
                 return new SearchParameters {PageSize = top, CurrentPage = 1, SearchTerm = search};
 
@@ -51,8 +24,8 @@
             {
                 int parsedTopValue;
                 if (int.TryParse(options.Top.RawValue, out parsedTopValue))
-                    top = parsedTopValue > BaseODataQuery<object>.MaxPageSize
-                              ? BaseODataQuery<object>.MaxPageSize
+                    top = parsedTopValue > maxPageSize
+                              ? maxPageSize
                               : parsedTopValue;
             }
 

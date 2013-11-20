@@ -8,12 +8,8 @@
 
     public class Get
     {
-        protected readonly Randomizer Randomizer = new Randomizer(Randomizer.RandomSeed);
+        protected static Randomizer Randomizer = new Randomizer(Randomizer.RandomSeed);
         protected static Get Instance { get; set; }
-
-        protected Get()
-        {
-        }
 
         public static T New<T>(bool generateRandom = false) where T : class
         {
@@ -47,6 +43,7 @@
         {
             return new Disc
                 {
+                    Id = generateRandom ? Randomizer.Next() : 0,
                     LengthInSeconds = generateRandom ? Randomizer.Next() : 100,
                     Released =
                         generateRandom ? DateTime.Now.Subtract(TimeSpan.FromDays(Randomizer.Next(10000))) : DateTime.Now,

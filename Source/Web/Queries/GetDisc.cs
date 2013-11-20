@@ -2,11 +2,7 @@
 {
     using Core.Model;
 
-    public class GetDisc : BaseODataQuery<Disc>, IFreeDbScalarQuery<Disc>
+    public class GetDisc : Query<Disc>
     {
-        public Disc GetResult(object id)
-        {
-            return Context.Set<Disc>().Find(id);
-        }
     }
 }

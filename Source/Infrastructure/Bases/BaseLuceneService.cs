@@ -2,8 +2,8 @@
 {
     using System;
     using System.IO;
-    using Lucene.Net.Store;
     using Properties;
+    using global::Lucene.Net.Store;
 
     public abstract class BaseLuceneService : IDisposable
     {

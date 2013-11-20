@@ -8,5 +8,8 @@
     {
         [DataMember]
         public PageResult<DiscDto> Discs { get; set; }
+
+        [DataMember]
+        public string YearsActive { get; set; }
     }
 }

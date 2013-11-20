@@ -168,14 +168,15 @@
     <Compile Include="Models\Dto\TrackDto.cs" />
     <Compile Include="Models\LinkedResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\BaseODataQuery.cs" />
     <Compile Include="Queries\GetArtist.cs" />
     <Compile Include="Queries\GetDisc.cs" />
     <Compile Include="Queries\GetDiscs.cs" />
     <Compile Include="Queries\GetDiscsForArtists.cs" />
-    <Compile Include="Queries\IFreeDbQuery.cs" />
+    <Compile Include="Queries\GetFirstAndLastDiscForArtist.cs" />
+    <Compile Include="Queries\IDataContextAware.cs" />
     <Compile Include="Queries\Query.cs" />
     <Compile Include="Queries\GetArtists.cs" />
+    <Compile Include="Queries\QueryFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

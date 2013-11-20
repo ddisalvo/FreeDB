@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bases\BaseLuceneService.cs" />
+    <Compile Include="Lucene\DelegatingCollector.cs" />
     <Compile Include="IndexService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchService.cs" />

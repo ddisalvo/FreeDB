@@ -7,7 +7,9 @@
             attached: attached,
             paginationParameters: ko.observable(getDefaultPaginationParameters()),
             pendingRequest: ko.observable(true),
-            artists: ko.observableArray([])
+            artists: ko.observableArray([]),
+            searchTerm: ko.observable(),
+            search: search
         };
 
         return vm;
@@ -29,6 +31,12 @@
                     loadMoreArtists();
                 }
             });
+            
+            $('form input.search').typeahead(
+                {
+                    name: 'artistSearch',
+                    remote: '/api/artists/suggest?search=%QUERY'
+                });
         }
 
         function getDefaultPaginationParameters() {
@@ -48,13 +56,42 @@
             var nextPage = vm.paginationParameters().currentPage() + 1;
             vm.paginationParameters().currentPage(nextPage);
 
-            dataContext.getArtists(vm.paginationParameters)
+            var query;
+            if (vm.searchTerm() && vm.searchTerm().length > 0)
+                query = dataContext.searchArtists(vm.searchTerm(), vm.paginationParameters);
+            else
+                query = dataContext.getArtists(vm.paginationParameters);
+
+            query.done(function (result) {
+                for (var i = 0; i < result.Items.length; i++) {
+                    vm.artists.push(result.Items[i]);
+                }
+
+                vm.paginationParameters().pendingScrollRequest(false);
+            });
+        }
+        
+        function search() {
+            if (vm.searchTerm().length === 0)
+                return false;
+
+            var params = getDefaultPaginationParameters();
+            params.sortCommand(null);
+            vm.paginationParameters(params);
+            searchWithParameters(vm.paginationParameters);
+        }
+        
+        function searchWithParameters(parameters) {
+            vm.pendingRequest(true);
+            dataContext.searchArtists(vm.searchTerm(), parameters)
                 .done(function (result) {
+                    vm.paginationParameters().totalItemCount(result.Count);
+                    vm.artists([]);
                     for (var i = 0; i < result.Items.length; i++) {
                         vm.artists.push(result.Items[i]);
                     }
 
-                    vm.paginationParameters().pendingScrollRequest(false);
+                    vm.pendingRequest(false);
                 });
         }
     });

@@ -5,7 +5,8 @@
             getDisc: getDisc,
             searchDiscs: searchDiscs,
             getArtists: getArtists,
-            getArtist: getArtist
+            getArtist: getArtist,
+            searchArtists: searchArtists
         };
 
         return dataContext;
@@ -13,10 +14,12 @@
         function paginationToOdata(paginationParameters) {
             var data = {
                 $inlinecount: "allpages",
-                $orderby: paginationParameters().sortCommand() + ' ' + (paginationParameters().sortDescending() ? 'desc' : 'asc'),
                 $top: paginationParameters().pageSize(),
                 $skip: (paginationParameters().currentPage() - 1) * paginationParameters().pageSize()
             };
+
+            if (paginationParameters().sortCommand())
+                data['$orderby'] = paginationParameters().sortCommand() + ' ' + (paginationParameters().sortDescending() ? 'desc' : 'asc');
 
             return data;
         }
@@ -44,6 +47,14 @@
             });
         }
         
+        function searchArtists(term, paginationParameters) {
+            return $.ajax({
+                url: '/api/artists/search?search=' + escape(term),
+                dataType: 'json',
+                data: paginationToOdata(paginationParameters)
+            });
+        }
+
         function getArtists(paginationParameters) {
             return $.ajax({
                 url: '/api/artists',
